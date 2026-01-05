@@ -1,0 +1,144 @@
+name: Docs ↔ Code Audit (RisingWave)
+
+on:
+  workflow_dispatch:
+    inputs:
+      risingwave_repo:
+        description: "GitHub repo for RisingWave (owner/name)"
+        required: true
+        default: "risingwavelabs/risingwave"
+      risingwave_ref:
+        description: "Branch/tag/SHA for RisingWave"
+        required: true
+        default: "main"
+      docs_repo:
+        description: "GitHub repo for risingwave-docs (owner/name)"
+        required: true
+        default: "risingwavelabs/risingwave-docs"
+      docs_ref:
+        description: "Branch/tag/SHA for risingwave-docs"
+        required: true
+        default: "main"
+      slices:
+        description: "Comma-separated slice IDs (e.g. S1,S2). Empty = all"
+        required: false
+        default: ""
+      claude_model:
+        description: "Claude model alias or full name"
+        required: true
+        default: "sonnet"
+      jobs:
+        description: "Parallel slice jobs"
+        required: true
+        default: "5"
+      commit_reports:
+        description: "Commit reports back to this repo"
+        required: true
+        default: "true"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: docs-code-audit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout audit repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout RisingWave
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.risingwave_repo }}
+          ref: ${{ inputs.risingwave_ref }}
+          path: work/risingwave
+          fetch-depth: 1
+
+      - name: Checkout risingwave-docs
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.docs_repo }}
+          ref: ${{ inputs.docs_ref }}
+          path: work/risingwave-docs
+          fetch-depth: 1
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python deps
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r tools/docs-code-compare/requirements.txt
+
+      - name: Setup Node (for installing Claude Code, if needed)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # NOTE: Installation method may vary by your org/environment.
+      # If you already have `claude` available on your runners, you can remove this step.
+      - name: Install Claude Code CLI
+        run: |
+          npm install -g @anthropic-ai/claude-code@latest
+          claude --version
+
+      # Auth strategy in CI varies. Many setups work with ANTHROPIC_API_KEY.
+      # If your environment requires a different token/config, modify this step.
+      - name: Configure Claude auth (best-effort)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "${ANTHROPIC_API_KEY}" ]; then
+            echo "WARNING: ANTHROPIC_API_KEY is not set. Claude may fail auth."
+          else
+            echo "ANTHROPIC_API_KEY is set (masked)."
+          fi
+
+      - name: Validate slices.yml (drift check)
+        run: |
+          python3 tools/docs-code-compare/validate_slices.py \
+            --code-repo-root work/risingwave \
+            --docs-repo-root work/risingwave-docs
+
+      - name: Run audit slices via Claude Code
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          RUN_TAG="run-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-rw_${{ inputs.risingwave_ref }}-docs_${{ inputs.docs_ref }}"
+          echo "RUN_TAG=${RUN_TAG}" >> $GITHUB_ENV
+          python3 tools/docs-code-compare/run_claude_slices.py \
+            --code-repo-root work/risingwave \
+            --docs-repo-root work/risingwave-docs \
+            --docs-repo-ref "${{ inputs.docs_ref }}" \
+            --slice-ids "${{ inputs.slices }}" \
+            --jobs "${{ inputs.jobs }}" \
+            --out-dir "reports/${RUN_TAG}" \
+            --claude-args "--model ${{ inputs.claude_model }}"
+
+      - name: Aggregate summary
+        if: always()
+        run: |
+          python3 tools/docs-code-compare/aggregate_reports.py --reports-dir "reports/${{ env.RUN_TAG }}" || true
+
+      - name: Commit reports
+        if: ${{ inputs.commit_reports == 'true' }}
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add "reports/${{ env.RUN_TAG }}" || true
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "docs-code-audit: rw=${{ inputs.risingwave_repo }}@${{ inputs.risingwave_ref }} docs=${{ inputs.docs_repo }}@${{ inputs.docs_ref }} (run ${{ github.run_id }})"
+          git push
+
+
