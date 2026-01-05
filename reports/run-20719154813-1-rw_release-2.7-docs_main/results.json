@@ -1,0 +1,82 @@
+[
+  {
+    "slice_id": "S0",
+    "ok": true,
+    "returncode": 0,
+    "duration_ms": 241005,
+    "report_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S0/slice_report.md",
+    "stderr_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S0/stderr.txt"
+  },
+  {
+    "slice_id": "S1",
+    "ok": true,
+    "returncode": 0,
+    "duration_ms": 270622,
+    "report_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S1/slice_report.md",
+    "stderr_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S1/stderr.txt"
+  },
+  {
+    "slice_id": "S2",
+    "ok": true,
+    "returncode": 0,
+    "duration_ms": 300190,
+    "report_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S2/slice_report.md",
+    "stderr_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S2/stderr.txt"
+  },
+  {
+    "slice_id": "S3",
+    "ok": true,
+    "returncode": 0,
+    "duration_ms": 300594,
+    "report_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S3/slice_report.md",
+    "stderr_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S3/stderr.txt"
+  },
+  {
+    "slice_id": "S4",
+    "ok": true,
+    "returncode": 0,
+    "duration_ms": 326017,
+    "report_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S4/slice_report.md",
+    "stderr_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S4/stderr.txt"
+  },
+  {
+    "slice_id": "S5",
+    "ok": true,
+    "returncode": 0,
+    "duration_ms": 261285,
+    "report_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S5/slice_report.md",
+    "stderr_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S5/stderr.txt"
+  },
+  {
+    "slice_id": "S6",
+    "ok": true,
+    "returncode": 0,
+    "duration_ms": 302086,
+    "report_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S6/slice_report.md",
+    "stderr_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S6/stderr.txt"
+  },
+  {
+    "slice_id": "S7",
+    "ok": true,
+    "returncode": 0,
+    "duration_ms": 297012,
+    "report_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S7/slice_report.md",
+    "stderr_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S7/stderr.txt"
+  },
+  {
+    "slice_id": "S8",
+    "ok": true,
+    "returncode": 0,
+    "duration_ms": 145914,
+    "report_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S8/slice_report.md",
+    "stderr_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S8/stderr.txt"
+  },
+  {
+    "slice_id": "S9",
+    "ok": true,
+    "returncode": 0,
+    "duration_ms": 122381,
+    "report_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S9/slice_report.md",
+    "stderr_path": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/reports/run-20719154813-1-rw_release-2.7-docs_main/S9/stderr.txt"
+  }
+]

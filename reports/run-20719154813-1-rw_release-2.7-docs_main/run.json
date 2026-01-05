@@ -1,0 +1,23 @@
+{
+  "started_at": 1767624763,
+  "code_repo_root": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/work/risingwave",
+  "docs_repo_root": "/home/runner/work/rw_docs_code_audit/rw_docs_code_audit/work/risingwave-docs",
+  "docs_repo_ref": "main",
+  "product_version": "latest",
+  "claude_cmd": "claude",
+  "claude_args": "--model sonnet --print --output-format text --tools Read,Bash --permission-mode bypassPermissions --add-dir /home/runner/work/rw_docs_code_audit/rw_docs_code_audit/work/risingwave --add-dir /home/runner/work/rw_docs_code_audit/rw_docs_code_audit/work/risingwave-docs",
+  "jobs": 5,
+  "timeout_s": 1800,
+  "slice_ids": [
+    "S0",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S8",
+    "S9"
+  ]
+}
